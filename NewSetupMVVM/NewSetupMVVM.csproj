@@ -7,4 +7,19 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="MyCommands\**" />
+    <Compile Remove="MyHelpers\**" />
+    <EmbeddedResource Remove="MyCommands\**" />
+    <EmbeddedResource Remove="MyHelpers\**" />
+    <None Remove="MyCommands\**" />
+    <None Remove="MyHelpers\**" />
+    <Page Remove="MyCommands\**" />
+    <Page Remove="MyHelpers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MVVMEssentials\MVVMEssentials.csproj" />
+  </ItemGroup>
+
 </Project>

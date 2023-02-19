@@ -32,17 +32,6 @@ namespace SetupMVVM.Stores
             Assembly = applicationAssembly;
         }
 
-        public string WindowName { get; set; } = "";
-
-        public bool IsOpen() 
-        {
-            //if(CurrentViewModel != null && WindowHelpers.IsWindowOpen<Window>(WindowName))
-            if (WindowHelpers.IsWindowOpen<Window>(WindowName))
-                return true;
-
-            return false;
-        }
-
         public event Action CurrentViewModelChanged;
 
         public void Close()

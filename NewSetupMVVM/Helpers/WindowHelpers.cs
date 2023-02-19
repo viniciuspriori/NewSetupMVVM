@@ -40,18 +40,5 @@ namespace NavigationSetup.Helpers
 
             return _windowsList?.AsReadOnly();
         }
-
-        public static bool IsWindowOpen<T>(string name = "") where T : Window
-        {
-
-            if (string.IsNullOrEmpty(name))
-            {
-                return Application.Current.Windows.OfType<T>().Any();
-            }
-            else
-            {
-                return Application.Current.Windows.OfType<T>().Any(w => w.Name.Equals(name));
-            }
-        }
     }
 }

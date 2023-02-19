@@ -3,7 +3,7 @@ using MVVMEssentials.ViewModels;
 
 namespace MVVMEssentials.Services
 {
-    public class NavigationService<TViewModel> : INavigationService where TViewModel : ViewModelBase
+    public class NavigationService<TViewModel> : INavigationService<object> where TViewModel : ViewModelBase
     {
         private readonly INavigationStore _navigationStore;
         private readonly CreateViewModel<TViewModel> _createViewModel;
@@ -14,7 +14,7 @@ namespace MVVMEssentials.Services
             _createViewModel = createViewModel;
         }
 
-        public void Navigate()
+        public void Navigate(object useless)
         {
             _navigationStore.CurrentViewModel = _createViewModel();
         }

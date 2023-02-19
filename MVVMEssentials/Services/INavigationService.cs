@@ -1,7 +1,7 @@
 ﻿namespace MVVMEssentials.Services
 {
-    public interface INavigationService
+    public interface INavigationService<T> where T : new()
     {
-        void Navigate();
+        void Navigate(T parameter = default);
     }
 }

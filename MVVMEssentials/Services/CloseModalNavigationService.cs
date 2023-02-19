@@ -2,7 +2,7 @@
 
 namespace MVVMEssentials.Services
 {
-    public class CloseModalNavigationService : INavigationService
+    public class CloseModalNavigationService : INavigationService<object>
     {
         private readonly ModalNavigationStore _navigationStore;
 
@@ -11,7 +11,7 @@ namespace MVVMEssentials.Services
             _navigationStore = navigationStore;
         }
 
-        public void Navigate()
+        public void Navigate(object o)
         {
             _navigationStore.Close();
         }

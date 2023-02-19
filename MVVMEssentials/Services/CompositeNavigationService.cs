@@ -2,20 +2,20 @@
 
 namespace MVVMEssentials.Services
 {
-    public class CompositeNavigationService : INavigationService
+    public class CompositeNavigationService : INavigationService<object>
     {
-        private readonly IEnumerable<INavigationService> _navigationServices;
+        private readonly IEnumerable<INavigationService<object>> _navigationServices;
 
-        public CompositeNavigationService(params INavigationService[] navigationServices)
+        public CompositeNavigationService(params INavigationService<object>[] navigationServices)
         {
             _navigationServices = navigationServices;
         }
 
-        public void Navigate()
+        public void Navigate(object o)
         {
-            foreach (INavigationService navigationService in _navigationServices)
+            foreach (INavigationService<object> navigationService in _navigationServices)
             {
-                navigationService.Navigate();
+                navigationService.Navigate(o);
             }
         }
     }

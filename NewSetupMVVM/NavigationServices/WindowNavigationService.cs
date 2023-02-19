@@ -18,39 +18,37 @@ using SetupMVVM.Stores;
 
 namespace SetupMVVM.NavigationServices
 {
-    public class WindowNavigationService<T> : INavigationService where T : ViewModelBase
+    public class WindowNavigationService<T> : INavigationService<object> where T : ViewModelBase
     {
         private readonly WindowNavigationStore _windowNavigationStore;
 
         private readonly CreateViewModel<T> _createViewModel;
 
-        public WindowNavigationService(WindowNavigationStore windowStore, CreateViewModel<T> createViewModel, string windowName)
+        public WindowNavigationService(WindowNavigationStore windowStore, CreateViewModel<T> createViewModel)
         {
             _windowNavigationStore = windowStore;
-            _windowNavigationStore.WindowName = windowName;
-
             _createViewModel = createViewModel;
         }
 
-        public void Navigate()
+        public void Navigate(object windowName)
         {
-            if (!_windowNavigationStore.IsOpen()) //opens only a single time
-            {
+            //if (!_windowNavigationStore.IsOpen()) //opens only a single time
+            //{
                 _windowNavigationStore.PrepareWindow(_createViewModel());
-                Show();
-            }
+                Show((string)windowName);
+            //}
         }
 
-        private void Show()
+        private void Show(string userGivenWindowName)
         {
             bool foundWindow;
             string path;
 
-            GetWindows(out foundWindow, out path);
+            GetWindows(out foundWindow, out path, userGivenWindowName);
 
-            var isOpen = _windowNavigationStore.IsOpen();
+            //var isOpen = _windowNavigationStore.IsOpen();
 
-            if (!isOpen && foundWindow)
+            if (foundWindow)
             {
                 OpenDialog(path);
             }
@@ -68,7 +66,7 @@ namespace SetupMVVM.NavigationServices
             window.ShowDialog(); //prevents user from clicking in the background window
         }
 
-        private void GetWindows(out bool foundWindow, out string path)
+        private void GetWindows(out bool foundWindow, out string path, string userGivenWindowName)
         {
             foundWindow = false;
             path = "";
@@ -79,7 +77,7 @@ namespace SetupMVVM.NavigationServices
             {
                 foreach (var item in windowList)
                 {
-                    if (item.ToLower().Contains(_windowNavigationStore.WindowName.ToLower()))
+                    if (item.ToLower().Contains(userGivenWindowName.ToLower()))
                     {
                         foundWindow = true;
                         path = item;
