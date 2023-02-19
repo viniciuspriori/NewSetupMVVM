@@ -2,6 +2,7 @@
 using MVVMEssentials.Stores;
 using MVVMEssentials.ViewModels;
 using NewSetupMVVM.ViewModels;
+using NewSetupMVVM.ViewModels.ModalViewModel;
 using SetupMVVM.NavigationServices;
 using SetupMVVM.Stores;
 using System;
@@ -55,7 +56,26 @@ namespace NewSetupMVVM
             return new WindowNavigationService<Window1VM>(_windowNavigationStore, W1VM);
         }
 
-        private Window1VM W1VM() => new Window1VM(CreateW2Nav());
+        private Window1VM W1VM()
+        {
+           return new Window1VM(CreateW2Nav(), CreateModalNav(), CreateCloseModalThenGoToUC1Nav());
+        }
+
+        private INavigationService CreateCloseModalThenGoToUC1Nav()
+        {
+            return new CompositeNavigationService(CreateCloseModalNav(), CreateUC1Nav());
+        }
+
+        private INavigationService CreateModalNav()
+        {
+
+            return new NavigationService<MyModalViewModel>(_modalNavigationStore, () => new MyModalViewModel(CreateCloseModalThenGoToUC1Nav()));
+        }
+
+        private INavigationService CreateCloseModalNav()
+        {
+            return new CloseModalNavigationService(_modalNavigationStore);
+        }
 
         private INavigationService CreateW2Nav()
         {

@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:NewSetupMVVM"
         xmlns:vms="clr-namespace:NewSetupMVVM.ViewModels"
         xmlns:vws="clr-namespace:NewSetupMVVM.Views"
+        xmlns:mdls="clr-namespace:NewSetupMVVM.Views.Modals"
+        xmlns:mdvm="clr-namespace:NewSetupMVVM.ViewModels.ModalViewModel"
         mc:Ignorable="d"
+        xmlns:custom="clr-namespace:ModalControl;assembly=ModalControl"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <DataTemplate DataType="{x:Type vms:UC1VM}">
@@ -16,8 +19,13 @@
         <DataTemplate DataType="{x:Type vms:UC2VM}">
             <vws:UserControl2/>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type mdvm:MyModalViewModel}">
+            <mdls:MyModal/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
+        <custom:Modal Content="{Binding CurrentModalViewModel}" Panel.ZIndex="1" IsOpen="{Binding IsOpen}"/>
         <ContentControl Content="{Binding CurrentViewModel}"/>
     </Grid>
 </Window>

@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:NewSetupMVVM.Views"
         mc:Ignorable="d"
         Title="Window1" Height="450" Width="800">
-    <Grid>
+    <StackPanel>
         <Button Content="Go W2" Command="{Binding OW2}"/>
+        <Button Content="Go Modal" Command="{Binding OM}"/>
+        <Button Content="Close Modal then UC1" Command="{Binding CMOUC1}"/>
 
-    </Grid>
+    </StackPanel>
 </Window>
