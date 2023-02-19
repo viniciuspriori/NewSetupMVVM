@@ -1,10 +1,10 @@
 ﻿using MVVMEssentials.Services;
+using MVVMEssentials.Stores;
 using MVVMEssentials.ViewModels;
 using System;
-using System.Linq;
 using System.Windows;
 using SetupMVVM.Stores;
-using NewSetupMVVM.Helpers;
+using SetupMVVM.Helpers;
 
 namespace SetupMVVM.NavigationServices
 {
@@ -22,11 +22,8 @@ namespace SetupMVVM.NavigationServices
 
         public void Navigate(string windowName)
         {
-            //if (!_windowNavigationStore.IsOpen()) //opens only a single time
-            //{
             _windowNavigationStore.PrepareWindow(_createViewModel());
-            Show((string)windowName);
-            //}
+            Show(windowName);
         }
 
         private void Show(string userGivenWindowName)

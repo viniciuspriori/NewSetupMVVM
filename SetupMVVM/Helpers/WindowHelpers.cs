@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
-namespace NewSetupMVVM.Helpers
+namespace SetupMVVM.Helpers
 {
     public static class WindowHelpers
     {
@@ -25,7 +20,6 @@ namespace NewSetupMVVM.Helpers
 
                 if (stream != null)
                 {
-
                     using (ResourceReader reader = new ResourceReader(stream))
                     {
                         foreach (DictionaryEntry entry in reader)

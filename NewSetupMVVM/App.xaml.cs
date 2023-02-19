@@ -50,7 +50,6 @@ namespace NewSetupMVVM
         private INavigationService CreateUC1Nav() => new NavigationService<UC1VM>(_navigationStore, UC1VM);
         private UC1VM UC1VM() => new UC1VM(CreateW1Nav());
 
-
         private INavigationService CreateW1Nav()
         {
             return new WindowNavigationService<Window1VM>(_windowNavigationStore, W1VM);

@@ -7,7 +7,7 @@ namespace MVVMEssentials.Commands
 {
     public abstract class CommandBase : ICommand
     {
-        public event EventHandler CanExecuteChanged;
+        public virtual event EventHandler CanExecuteChanged;
 
         public virtual bool CanExecute(object parameter)
         {

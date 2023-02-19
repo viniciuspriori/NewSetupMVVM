@@ -10,11 +10,12 @@ namespace SetupMVVM.Commands
 {
     public class RelayCommand : CommandBase
     {
-        public override event EventHandler CanExecuteChanged
+        public override event EventHandler? CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
+
         private Action methodToExecute;
         private Func<bool>? canExecuteEvaluator;
         public RelayCommand(Action methodToExecute, Func<bool>? canExecuteEvaluator)
