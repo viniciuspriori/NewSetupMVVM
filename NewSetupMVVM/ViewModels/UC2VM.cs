@@ -14,7 +14,7 @@ namespace NewSetupMVVM.ViewModels
     {
         public ICommand OUC1 { get; }
 
-        public UC2VM(INavigationService<object> backUC1)
+        public UC2VM(INavigationService backUC1)
         {
             OUC1 = new NavigateCommand(backUC1);
         }

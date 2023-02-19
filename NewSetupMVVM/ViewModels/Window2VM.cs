@@ -13,7 +13,7 @@ namespace NewSetupMVVM.ViewModels
     public class Window2VM : ViewModelBase
     {
         public ICommand OUC2 { get; set; }
-        public Window2VM(INavigationService<object> gouc2main)
+        public Window2VM(INavigationService gouc2main)
         {
             OUC2 = new NavigateCommand(gouc2main);
         }

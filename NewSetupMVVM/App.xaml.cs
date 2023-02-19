@@ -34,7 +34,7 @@ namespace NewSetupMVVM
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            INavigationService<object> navigationService = CreateUC1Nav();
+            INavigationService navigationService = CreateUC1Nav();
             navigationService.Navigate();
 
             MainWindow = new MainWindow()
@@ -46,25 +46,25 @@ namespace NewSetupMVVM
             base.OnStartup(e);
         }
 
-        private INavigationService<object> CreateUC1Nav() => new NavigationService<UC1VM>(_navigationStore, UC1VM);
+        private INavigationService CreateUC1Nav() => new NavigationService<UC1VM>(_navigationStore, UC1VM);
         private UC1VM UC1VM() => new UC1VM(CreateW1Nav());
 
 
-        private INavigationService<object> CreateW1Nav()
+        private INavigationService CreateW1Nav()
         {
             return new WindowNavigationService<Window1VM>(_windowNavigationStore, W1VM);
         }
 
         private Window1VM W1VM() => new Window1VM(CreateW2Nav());
 
-        private INavigationService<object> CreateW2Nav()
+        private INavigationService CreateW2Nav()
         {
             return new WindowNavigationService<Window2VM>(_windowNavigationStore, W2VM);
         }
 
         private Window2VM W2VM() => new Window2VM(CreateUC2Nav());
 
-        private INavigationService<object> CreateUC2Nav()
+        private INavigationService CreateUC2Nav()
         {
             return new NavigationService<UC2VM>(_navigationStore, () => new UC2VM(CreateUC1Nav()));
         }

@@ -13,7 +13,7 @@ namespace NewSetupMVVM.ViewModels
     public class Window1VM : ViewModelBase
     {
         public ICommand OW2 { get; set; }
-        public Window1VM(INavigationService<object> goW2)
+        public Window1VM(INavigationService goW2)
         {
             OW2 = new WindowNavigateCommand(goW2, "Window2");
         }

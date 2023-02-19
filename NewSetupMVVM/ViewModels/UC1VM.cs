@@ -14,7 +14,7 @@ namespace NewSetupMVVM.ViewModels
     public class UC1VM : ViewModelBase
     {
         public ICommand OW1 { get; set; }
-        public UC1VM(INavigationService<object> goW1)
+        public UC1VM(INavigationService goW1)
         {
             OW1 = new WindowNavigateCommand(goW1, "Window1");
         }

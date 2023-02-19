@@ -18,7 +18,7 @@ using SetupMVVM.Stores;
 
 namespace SetupMVVM.NavigationServices
 {
-    public class WindowNavigationService<T> : INavigationService<object> where T : ViewModelBase
+    public class WindowNavigationService<T> : INavigationService where T : ViewModelBase
     {
         private readonly WindowNavigationStore _windowNavigationStore;
 
@@ -30,12 +30,12 @@ namespace SetupMVVM.NavigationServices
             _createViewModel = createViewModel;
         }
 
-        public void Navigate(object windowName)
+        public void Navigate(string windowName)
         {
             //if (!_windowNavigationStore.IsOpen()) //opens only a single time
             //{
-                _windowNavigationStore.PrepareWindow(_createViewModel());
-                Show((string)windowName);
+            _windowNavigationStore.PrepareWindow(_createViewModel());
+            Show((string)windowName);
             //}
         }
 

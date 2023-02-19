@@ -10,13 +10,18 @@ namespace SetupMVVM.Commands
 {
     public class WindowNavigateCommand : CommandBase
     {
-        private readonly INavigationService<object> windowNavigationService;
+        private readonly INavigationService windowNavigationService;
         string windowName = string.Empty;
 
-        public WindowNavigateCommand(INavigationService<object> windowNavigationService, string windowUserWants)
+        public WindowNavigateCommand(INavigationService windowNavigationService, string windowUserWants)
         {
             this.windowNavigationService = windowNavigationService;
             windowName = windowUserWants;
+        }
+
+        public virtual bool CanExecute(object parameter)
+        {
+            return windowName != string.Empty;
         }
 
         public override void Execute(object parameter)
