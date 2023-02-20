@@ -1,6 +1,6 @@
-﻿using MVVMEssentials.Stores;
+﻿using SetupMVVM.Stores;
 
-namespace MVVMEssentials.ViewModels
+namespace SetupMVVM.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {

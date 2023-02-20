@@ -1,4 +1,4 @@
-﻿using MVVMEssentials.ViewModels;
+﻿using SetupMVVM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;

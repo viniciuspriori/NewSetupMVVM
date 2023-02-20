@@ -1,6 +1,6 @@
-﻿using MVVMEssentials.Stores;
+﻿using SetupMVVM.Stores;
 
-namespace MVVMEssentials.Services
+namespace SetupMVVM.Services
 {
     public class CloseModalNavigationService : INavigationService
     {

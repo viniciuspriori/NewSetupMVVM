@@ -48,7 +48,15 @@ namespace NewSetupMVVM
         }
 
         private INavigationService CreateUC1Nav() => new NavigationService<UC1VM>(_navigationStore, UC1VM);
-        private UC1VM UC1VM() => new UC1VM(CreateW1Nav());
+
+        //MANDRAKE!: Opening to windows together doesn't work quite nice in CompositeNavigationService
+        //NOT recommended!
+        private UC1VM UC1VM() => new UC1VM(CreateW1Nav(), CreateGoUC2ThenGoToW1NavThenGoToW2(), CreateUC2Nav());
+
+        private ICompositeWindowNavigationService CreateGoUC2ThenGoToW1NavThenGoToW2()
+        {
+            return new CompositeNavigationService(CreateUC2Nav(), CreateW1Nav(), CreateW2Nav());
+        }
 
         private INavigationService CreateW1Nav()
         {

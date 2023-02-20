@@ -1,6 +1,6 @@
-﻿using MVVMEssentials.ViewModels;
+﻿using SetupMVVM.ViewModels;
 
-namespace MVVMEssentials.Stores
+namespace SetupMVVM.Stores
 {
     public interface INavigationStore
     {

@@ -1,4 +1,4 @@
-﻿namespace MVVMEssentials.ViewModels
+﻿namespace SetupMVVM.ViewModels
 {
     public delegate TViewModel CreateViewModel<TViewModel>() where TViewModel : ViewModelBase;
 

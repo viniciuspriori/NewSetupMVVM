@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:NewSetupMVVM.Views"
              mc:Ignorable="d" Background="Aquamarine"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <StackPanel>
         <Button Content="go Window1" Command="{Binding OW1}"/>
-    </Grid>
+        <Button Content="UC2 W1 W2" Command="{Binding OCU2OW1OW2}"/>
+        <Button Content="go UC2" Command="{Binding OUC2}"/>
+    </StackPanel>
 </UserControl>

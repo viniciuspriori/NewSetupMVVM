@@ -1,7 +1,7 @@
-﻿using MVVMEssentials.Stores;
-using MVVMEssentials.ViewModels;
+﻿using SetupMVVM.Stores;
+using SetupMVVM.ViewModels;
 
-namespace MVVMEssentials.Services
+namespace SetupMVVM.Services
 {
     public class ParameterNavigationService<TParameter, TViewModel>
         where TViewModel : ViewModelBase

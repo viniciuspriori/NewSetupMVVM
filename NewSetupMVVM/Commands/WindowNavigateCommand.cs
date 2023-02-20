@@ -21,7 +21,7 @@ namespace SetupMVVM.Commands
 
         public override bool CanExecute(object parameter)
         {
-            return windowName != string.Empty;
+            return windowName != string.Empty && windowName != null;
         }
 
         public override void Execute(object parameter)

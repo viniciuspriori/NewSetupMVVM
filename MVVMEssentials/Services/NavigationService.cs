@@ -14,7 +14,7 @@ namespace MVVMEssentials.Services
             _createViewModel = createViewModel;
         }
 
-        public void Navigate(string parameter = null)
+        public void Navigate(string windowName = null)
         {
             _navigationStore.CurrentViewModel = _createViewModel();
         }

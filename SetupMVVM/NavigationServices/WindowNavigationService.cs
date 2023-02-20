@@ -1,7 +1,7 @@
-﻿using MVVMEssentials.Services;
-using MVVMEssentials.Stores;
-using MVVMEssentials.ViewModels;
+﻿using SetupMVVM.Services;
+using SetupMVVM.ViewModels;
 using System;
+using System.Linq;
 using System.Windows;
 using SetupMVVM.Stores;
 using SetupMVVM.Helpers;
@@ -14,16 +14,23 @@ namespace SetupMVVM.NavigationServices
 
         private readonly CreateViewModel<T> _createViewModel;
 
-        public WindowNavigationService(WindowNavigationStore windowStore, CreateViewModel<T> createViewModel)
+        private readonly bool _showDialog;
+
+        public WindowNavigationService(WindowNavigationStore windowStore, CreateViewModel<T> createViewModel, bool showDialog = true)
         {
             _windowNavigationStore = windowStore;
             _createViewModel = createViewModel;
+            _showDialog = showDialog;
         }
 
         public void Navigate(string windowName)
         {
+            //if (!_windowNavigationStore.IsOpen()) //opens only a single time
+            //{
             _windowNavigationStore.PrepareWindow(_createViewModel());
             Show(windowName);
+            
+            //}
         }
 
         private void Show(string userGivenWindowName)
@@ -50,7 +57,15 @@ namespace SetupMVVM.NavigationServices
             var uri = new Uri(@$"\..\..\..\{path}", UriKind.RelativeOrAbsolute);
             var window = (Window)Application.LoadComponent(uri);
             window.DataContext = _windowNavigationStore.CurrentViewModel;
-            window.ShowDialog(); //prevents user from clicking in the background window
+
+            if (_showDialog)
+            {
+                window.ShowDialog(); //prevents user from clicking in the background window
+            } 
+            else
+            {
+                window.Show();
+            }
         }
 
         private void GetWindows(out bool foundWindow, out string path, string userGivenWindowName)

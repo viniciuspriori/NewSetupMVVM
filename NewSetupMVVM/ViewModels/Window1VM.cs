@@ -20,7 +20,7 @@ namespace NewSetupMVVM.ViewModels
 
         public Window1VM(INavigationService goW2, INavigationService goModal, INavigationService closeModalGoToUC1)
         {
-            OW2 = new WindowNavigateCommand(goW2, "Window2");
+            OW2 = new NavigateCommand(goW2, "Window2");
 
             OM = new NavigateCommand(goModal);
 

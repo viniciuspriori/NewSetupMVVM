@@ -1,7 +1,7 @@
-﻿namespace MVVMEssentials.Services
+﻿namespace SetupMVVM.Services
 {
     public interface INavigationService
     {
-        void Navigate(string parameter = default);
+        void Navigate(string windowName = null);
     }
 }

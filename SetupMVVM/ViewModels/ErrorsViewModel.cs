@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
-namespace MVVMEssentials.ViewModels
+namespace SetupMVVM.ViewModels
 {
     public class ErrorsViewModel : ViewModelBase, INotifyDataErrorInfo
     {

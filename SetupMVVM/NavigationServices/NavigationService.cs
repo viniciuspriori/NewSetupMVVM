@@ -1,7 +1,8 @@
-﻿using MVVMEssentials.Stores;
-using MVVMEssentials.ViewModels;
+﻿
+using SetupMVVM.Stores;
+using SetupMVVM.ViewModels;
 
-namespace MVVMEssentials.Services
+namespace SetupMVVM.Services
 {
     public class NavigationService<TViewModel> : INavigationService where TViewModel : ViewModelBase
     {
@@ -14,7 +15,7 @@ namespace MVVMEssentials.Services
             _createViewModel = createViewModel;
         }
 
-        public void Navigate(string parameter = null)
+        public void Navigate(string windowName = null)
         {
             _navigationStore.CurrentViewModel = _createViewModel();
         }

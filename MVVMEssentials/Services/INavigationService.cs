@@ -2,6 +2,6 @@
 {
     public interface INavigationService
     {
-        void Navigate(string parameter = default);
+        void Navigate(string windowName = null);
     }
 }

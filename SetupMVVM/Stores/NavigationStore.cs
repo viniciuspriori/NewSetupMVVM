@@ -1,7 +1,7 @@
-﻿using MVVMEssentials.ViewModels;
+﻿using SetupMVVM.ViewModels;
 using System;
 
-namespace MVVMEssentials.Stores
+namespace SetupMVVM.Stores
 {
     public class NavigationStore : INavigationStore
     {

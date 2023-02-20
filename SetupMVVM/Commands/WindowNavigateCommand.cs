@@ -1,10 +1,4 @@
-﻿using MVVMEssentials.Commands;
-using MVVMEssentials.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SetupMVVM.Services;
 
 namespace SetupMVVM.Commands
 {
@@ -21,7 +15,7 @@ namespace SetupMVVM.Commands
 
         public override bool CanExecute(object parameter)
         {
-            return windowName != string.Empty;
+            return windowName != string.Empty && windowName != null;
         }
 
         public override void Execute(object parameter)

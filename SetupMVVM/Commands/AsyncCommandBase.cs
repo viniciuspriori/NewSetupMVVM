@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace MVVMEssentials.Commands
+namespace SetupMVVM.Commands
 {
     public abstract class AsyncCommandBase : CommandBase
     {
