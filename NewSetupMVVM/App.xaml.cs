@@ -1,4 +1,5 @@
-﻿using MVVMEssentials.Services;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MVVMEssentials.Services;
 using MVVMEssentials.Stores;
 using MVVMEssentials.ViewModels;
 using NewSetupMVVM.ViewModels;
@@ -22,78 +23,91 @@ namespace NewSetupMVVM
 
     public partial class App : Application
     {
-        private readonly NavigationStore _navigationStore;
-        private readonly ModalNavigationStore _modalNavigationStore;
-        private readonly WindowNavigationStore _windowNavigationStore;
+        private readonly IServiceProvider _serviceProvider;
 
         public App()
         {
-            _navigationStore = new NavigationStore();
-            _modalNavigationStore = new ModalNavigationStore();
-            _windowNavigationStore = new WindowNavigationStore(Assembly.GetExecutingAssembly());
+            IServiceCollection services = new ServiceCollection();
+
+            //STORES
+            services.AddSingleton<NavigationStore>();
+            services.AddSingleton<ModalNavigationStore>();
+            services.AddSingleton<Assembly>(Assembly.GetExecutingAssembly());
+            services.AddSingleton<WindowNavigationStore>();
+
+            //FIRST VIEW
+            services.AddSingleton<INavigationService>(s => CreateUC1Nav(s));
+
+            //VIEW MODELS
+            services.AddSingleton<UC1VM>(s => new UC1VM(CreateW1Nav(s), CreateGoUC2ThenGoToW1NavThenGoToW2(s), CreateUC2Nav(s)));
+            services.AddTransient<UC2VM>(s => new UC2VM(CreateUC1Nav(s)));
+            services.AddTransient<Window2VM>(s => new Window2VM(CreateUC2Nav(s)));
+            services.AddTransient<MyModalViewModel>(s => new MyModalViewModel(CreateCloseModalThenGoToUC1Nav(s)));
+            services.AddTransient<Window1VM>(s => new Window1VM(CreateW2Nav(s), CreateModalNav(s), CreateCloseModalThenGoToUC1Nav(s)));
+
+            //MAIN WINDOW AND MAINVIEWMODEL
+            services.AddSingleton<MainWindow>(s => new MainWindow()
+            {
+                DataContext = s.GetRequiredService<MainViewModel>()
+            });
+
+            services.AddSingleton<MainViewModel>();
+
+            _serviceProvider = services.BuildServiceProvider();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            INavigationService navigationService = CreateUC1Nav();
+            INavigationService navigationService = _serviceProvider.GetRequiredService<INavigationService>();
             navigationService.Navigate();
 
-            MainWindow = new MainWindow()
-            {
-                DataContext = new MainViewModel(_navigationStore, _modalNavigationStore)
-            };
+            MainWindow = _serviceProvider.GetRequiredService<MainWindow>();
+            MainWindow.Show();
             MainWindow.Show();
 
             base.OnStartup(e);
         }
 
-        private INavigationService CreateUC1Nav() => new NavigationService<UC1VM>(_navigationStore, UC1VM);
+        private INavigationService CreateUC1Nav(IServiceProvider s) => new NavigationService<UC1VM>(s.GetRequiredService<NavigationStore>(), 
+                                                                                                    () => s.GetRequiredService<UC1VM>());
 
         //MANDRAKE!: Opening to windows together doesn't work quite nice in CompositeNavigationService
         //NOT recommended!
-        private UC1VM UC1VM() => new UC1VM(CreateW1Nav(), CreateGoUC2ThenGoToW1NavThenGoToW2(), CreateUC2Nav());
-
-        private ICompositeWindowNavigationService CreateGoUC2ThenGoToW1NavThenGoToW2()
+        private ICompositeWindowNavigationService CreateGoUC2ThenGoToW1NavThenGoToW2(IServiceProvider s)
         {
-            return new CompositeNavigationService(CreateUC2Nav(), CreateW1Nav(), CreateW2Nav());
+            return new CompositeNavigationService(CreateUC2Nav(s), CreateW1Nav(s), CreateW2Nav(s));
         }
 
-        private INavigationService CreateW1Nav()
+        private INavigationService CreateW1Nav(IServiceProvider s)
         {
-            return new WindowNavigationService<Window1VM>(_windowNavigationStore, W1VM);
+            return new WindowNavigationService<Window1VM>(s.GetRequiredService<WindowNavigationStore>(), () => s.GetRequiredService<Window1VM>());
         }
 
-        private Window1VM W1VM()
+        private INavigationService CreateCloseModalThenGoToUC1Nav(IServiceProvider s)
         {
-           return new Window1VM(CreateW2Nav(), CreateModalNav(), CreateCloseModalThenGoToUC1Nav());
+            return new CompositeNavigationService(CreateCloseModalNav(s), CreateUC1Nav(s));
         }
 
-        private INavigationService CreateCloseModalThenGoToUC1Nav()
+        private INavigationService CreateModalNav(IServiceProvider s)
         {
-            return new CompositeNavigationService(CreateCloseModalNav(), CreateUC1Nav());
+            return new NavigationService<MyModalViewModel>(s.GetRequiredService<ModalNavigationStore>(), () => s.GetRequiredService<MyModalViewModel>());
         }
 
-        private INavigationService CreateModalNav()
+        private INavigationService CreateCloseModalNav(IServiceProvider s)
         {
-
-            return new NavigationService<MyModalViewModel>(_modalNavigationStore, () => new MyModalViewModel(CreateCloseModalThenGoToUC1Nav()));
+            return new CloseModalNavigationService(s.GetRequiredService<ModalNavigationStore>());
         }
 
-        private INavigationService CreateCloseModalNav()
+        private INavigationService CreateW2Nav(IServiceProvider s)
         {
-            return new CloseModalNavigationService(_modalNavigationStore);
+            return new WindowNavigationService<Window2VM>(s.GetRequiredService<WindowNavigationStore>(), () => s.GetRequiredService<Window2VM>());
         }
 
-        private INavigationService CreateW2Nav()
+        private INavigationService CreateUC2Nav(IServiceProvider s)
         {
-            return new WindowNavigationService<Window2VM>(_windowNavigationStore, W2VM);
-        }
+            return new NavigationService<UC2VM>(s.GetRequiredService<NavigationStore>(), () => s.GetRequiredService<UC2VM>());
 
-        private Window2VM W2VM() => new Window2VM(CreateUC2Nav());
-
-        private INavigationService CreateUC2Nav()
-        {
-            return new NavigationService<UC2VM>(_navigationStore, () => new UC2VM(CreateUC1Nav()));
+            //return new NavigationService<UC2VM>(s.GetRequiredService<NavigationStore>(), () => new UC2VM(CreateUC1Nav(s)));
         }
     }
 }
